@@ -1,23 +1,18 @@
+{% extends 'base.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
-    {% comment %} Um, sorry, no CSS or Materialize. I will am Tachyons instead. {% endcomment %}
-
-    <title>Cat Collectr</title>
-  </head>
-  <body>
-    <h1 class="washed-green">CatCollectr</h1>
-    <hr />
+{% block content %}
     {% for cat in cats %}
-      <p>
-        Name: {{ cat.name }}
-      </p>
+      <a href="/{{cat.id}}">
+        <p>
+          Name: {{ cat.name }}      
+        </p>
+      </a>
+      <a href="/user/{{cat.user.username}}">
+        <p>
+          Adopted by: {{ cat.user.username }}
+        </p>
+      </a>
       <p>
         {% if cat.age > 0 %}
           Age: {{ cat.age }}
@@ -25,6 +20,9 @@
           Age: Kitten
         {% endif %} 
       </p>
+      <a class="f6 link dim ba ph3 pv2 mb2 dib black btn" data-id="{{cat.id}}">
+        Likes: {% if cat.likes > 0 %} {{ cat.likes }} {% else %} None :( {% endif %}
+      </a>
       <hr>
 
     {% endfor %}
@@ -33,6 +31,4 @@
       {{ form.as_p }}
       <input type="submit" value="Submit" />
     </form>
-    <footer>All rights reserved, Cat Collectr 2018</footer>
-  </body>
-</html>
+{% endblock %}
